@@ -1,26 +1,24 @@
-export const InvalidCharacterNameError = new Error('Name should be from 2 to 10 characters long.');
-export const InvalidCharacterTypeError = new Error('Unknown character type.');
-export const CharacterIsDeadErorr = new Error('Character is dead.');
+const types = ['Bowman', 'Swordsman', 'Magician', 'Daemon', 'Undead', 'Zombie'];
 
 export default class Character {
   constructor(name, type) {
     if (name.length < 2 || name.length > 10) {
-      throw InvalidCharacterNameError;
+      throw new Error('Invalid name length.');
     }
-    if (['Bowman', 'Swordsman', 'Magician', 'Daemon', 'Undead', 'Zombie'].indexOf(type) === -1) {
-      throw InvalidCharacterTypeError;
+    if (!types.includes(type)) {
+      throw new Error('Invalid type');
     }
     this.name = name;
     this.type = type;
     this.health = 100;
     this.level = 1;
-    this.attack = 0;
-    this.defence = 0;
+    this.attack = undefined;
+    this.defence = undefined;
   }
 
   levelUp() {
     if (this.health <= 0) {
-      throw CharacterIsDeadErorr;
+      throw new Error('Can not level up a dead character.');
     }
     this.level += 1;
     this.health = 100;
